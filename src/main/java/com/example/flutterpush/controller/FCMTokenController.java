@@ -5,25 +5,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.flutterpush.controller.dto.UserTokenSaveRequest;
-import com.example.flutterpush.entity.UserToken;
-import com.example.flutterpush.service.UserTokenService;
+import com.example.flutterpush.entity.User;
+import com.example.flutterpush.service.FCMTokenService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/tokens")
 @RequiredArgsConstructor
-public class UserTokenSaveController {
+public class FCMTokenController {
 
-	private final UserTokenService userTokenService;
+	private final FCMTokenService FCMTokenService;
 
 	@PostMapping
-	public ResponseEntity<UserToken> saveToken(@RequestBody UserTokenSaveRequest userTokenSaveRequest) {
+	public ResponseEntity<User> saveToken(@RequestBody UserTokenSaveRequest userTokenSaveRequest) {
 		System.out.println(userTokenSaveRequest.getToken());
-		return new ResponseEntity<>(userTokenService.saveToken(userTokenSaveRequest.getToken()), HttpStatus.CREATED);
+		return new ResponseEntity<>(FCMTokenService.saveToken(userTokenSaveRequest.getToken()), HttpStatus.CREATED);
 	}
 }
