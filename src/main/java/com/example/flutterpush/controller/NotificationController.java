@@ -25,9 +25,9 @@ public class NotificationController {
 		System.out.println("request = " + request.getId());
 
 		try {
-			String response = notificationServiceImpl.sendNotification(Long.parseLong(request.getId()), request.getTitle(), request.getBody());
-			System.out.println("response = " + response);
-			return ResponseEntity.ok("Notification sent successfully. Response: " + response);
+			notificationServiceImpl.sendNotification(request.getId(), request.getTitle(),
+				request.getBody());
+			return ResponseEntity.ok("Notification sent successfully.");
 		} catch (FirebaseMessagingException e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send notification");
