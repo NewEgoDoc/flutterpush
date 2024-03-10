@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.flutterpush.controller.dto.UserTokenSaveRequest;
+import com.example.flutterpush.entity.DeviceApp;
 import com.example.flutterpush.entity.User;
 import com.example.flutterpush.service.FCMTokenService;
+import com.example.flutterpush.service.dto.RegisterTokenCommand;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,8 +23,13 @@ public class FCMTokenController {
 	private final FCMTokenService FCMTokenService;
 
 	@PostMapping
-	public ResponseEntity<User> saveToken(@RequestBody UserTokenSaveRequest userTokenSaveRequest) {
-		System.out.println(userTokenSaveRequest.getToken());
-		return new ResponseEntity<>(FCMTokenService.saveToken(userTokenSaveRequest.getToken()), HttpStatus.CREATED);
+	public ResponseEntity<DeviceApp> saveToken(@RequestBody UserTokenSaveRequest request) {
+		return new ResponseEntity<>(
+			FCMTokenService.registerToken(
+				RegisterTokenCommand.create(
+					request.getUserId(),
+					request.getToken(),
+					request.getOs(),
+					request.getAppSerialNumber())), HttpStatus.CREATED);
 	}
 }
